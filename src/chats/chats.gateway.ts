@@ -58,6 +58,11 @@ export class ChatsGateway
         id: socket.id,
         username,
       });
+    } else {
+      await this.socketModel.create({
+        id: socket.id,
+        username,
+      });
     }
     socket.broadcast.emit('user_connected', username);
     return username;
@@ -76,7 +81,7 @@ export class ChatsGateway
 
     socket.broadcast.emit('new_chat', {
       chat,
-      username: socket.id,
+      username: socketObj.username,
     });
   }
 }
